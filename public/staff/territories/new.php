@@ -28,13 +28,13 @@ if(is_post_request()) {
 <?php include(SHARED_PATH . '/header.php'); ?>
 
 <div id="main-content">
-  <a href="../states/show.php?id=<?php echo 1; ?>">Back to State Details</a>
+  <a href="../states/show.php?id=<?php echo $territory['state_id']; ?>">Back to State Details</a>
 
   <h1>New Territory</h1>
 
   <?php echo display_errors($errors); ?>
 
-  <form action="new.php" method="post">
+  <form action="new.php?id=<?php echo $territory['state_id']?>" method="post">
     Name:<br />
     <input type="text" name="name" value="<?php echo $territory['name']; ?>" /><br />
     Position:<br />

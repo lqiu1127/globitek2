@@ -38,7 +38,7 @@ if(is_post_request()) {
 
   <?php echo display_errors($errors); ?>
 
-  <form action="edit.php?id=<?php echo $user['id']; ?>" method="post">
+  <form action="edit.php?id=<?php echo $salesperson['id']; ?>" method="post">
     First name:<br />
     <input type="text" name="first_name" value="<?php echo $salesperson['first_name']; ?>" /><br />
     Last name:<br />

@@ -45,8 +45,23 @@
   }
 
   function validate_state($state, $errors=array()) {
-    // TODO add validations
-
+    //validate name
+    if (is_blank($state['name'])) {
+      $errors[] = "Name cannot be blank.";
+    } elseif (!has_length($state['name'], ['min' => 2, 'max' => 255])) {
+      $errors[] = "Name must be between 2 and 255 characters.";
+    } elseif (!has_valid_name_format($state['name'])){
+      $errors[] = "Enter a valid name without special characters.";
+    }
+    
+    // validate code
+    if (is_blank($state['code'])) {
+      $errors[] = "Code cannot be blank.";
+    } elseif (!has_length($state['code'], ['min' => 2, 'max' => 255])) {
+      $errors[] = "Code must be between 2 and 255 characters.";
+    } elseif (!has_valid_name_format($state['code'])){
+      $errors[] = "Enter a valid code without special characters.";
+    }
     return $errors;
   }
 
@@ -142,7 +157,21 @@
   }
 
   function validate_territory($territory, $errors=array()) {
-    // TODO add validations
+    //validate name
+    if (is_blank($territory['name'])) {
+      $errors[] = "Name cannot be blank.";
+    } elseif (!has_length($territory['name'], ['min' => 2, 'max' => 255])) {
+      $errors[] = "Name must be between 2 and 255 characters.";
+    } elseif (!has_valid_name_format($territory['name'])){
+      $errors[] = "Enter a valid name without special characters.";
+    }
+
+    //validate position
+    if (is_blank($territory['position'])) {
+      $errors[] = "Position cannot be blank.";
+    } elseif (!is_valid_number($territory['position'])){
+      $errors[] = "Enter a valid state position.";
+    }
 
     return $errors;
   }
@@ -245,7 +274,35 @@
 
   function validate_salesperson($salesperson, $errors=array()) {
     // TODO add validations
+    if (is_blank($salesperson['first_name'])) {
+      $errors[] = "First name cannot be blank.";
+    } elseif (!has_length($salesperson['first_name'], array('min' => 2, 'max' => 255))) {
+      $errors[] = "First name must be between 2 and 255 characters.";
+    } elseif (!has_valid_name_format($salesperson['first_name'])){
+      $errors[] = "Enter a valid name without special characters.";
+    }
 
+
+    if (is_blank($salesperson['last_name'])) {
+      $errors[] = "Last name cannot be blank.";
+    } elseif (!has_length($salesperson['last_name'], array('min' => 2, 'max' => 255))) {
+      $errors[] = "Last name must be between 2 and 255 characters.";
+    } elseif (!has_valid_name_format($salesperson['last_name'])){
+      $errors[] = "Enter a valid name without special characters.";
+    }
+
+
+    if (is_blank($salesperson['email'])) {
+      $errors[] = "Email cannot be blank.";
+    } elseif (!has_valid_email_format($salesperson['email'])) {
+      $errors[] = "Email must be a valid format.";
+    }
+
+    if (is_blank($salesperson['phone'])) {
+      $errors[] = "Phone cannot be blank.";
+    } elseif (!has_length($salesperson['phone'], array('min' => 6,'max' => 20))) {
+      $errors[] = "Phone number needs to be longer than 6 characters and less than 20.";
+    }
     return $errors;
   }
 
@@ -294,8 +351,8 @@
     $sql .= "first_name='" . $salesperson['first_name'] . "', ";
     $sql .= "last_name='" . $salesperson['last_name'] . "', ";
     $sql .= "phone='" . $salesperson['phone'] . "', ";
-    $sql .= "email='" . $territory['email'] . "' ";
-    $sql .= "WHERE id='" . $territory['id'] . "' ";
+    $sql .= "email='" . $salesperson['email'] . "' ";
+    $sql .= "WHERE id='" . $salesperson['id'] . "' ";
     $sql .= "LIMIT 1;";
     
     // For update_salesperson statments, $result is just true/false
@@ -391,7 +448,7 @@
     $sql .= "'" . $user['last_name'] . "',";
     $sql .= "'" . $user['email'] . "',";
     $sql .= "'" . $user['username'] . "',";
-    $sql .= "'" . $created_at . "',";
+    $sql .= "'" . $created_at . "'";
     $sql .= ");";
     // For INSERT statments, $result is just true/false
     $result = db_query($db, $sql);

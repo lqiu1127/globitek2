@@ -21,9 +21,24 @@
 
   // has_valid_email_format('test@test.com')
   function has_valid_email_format($value) {
-    // Function can be improved later to check for
-    // more than just '@'.
-    return strpos($value, '@') !== false;
+    // regex for emails in generals
+    return preg_match("/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/ ", $value);
+  }
+
+  // has_valid_name_format('Loe-Garb's')
+  function has_valid_name_format($value) {
+    // regex for names in generals
+    return preg_match("/^[A-Za-z_'.-]+$/ ", $value);
+  }
+
+  // has_valid_username_format('Loe-Garb's')
+  function has_valid_username_format($value) {
+    // regex for usernames in generals
+    return preg_match("/^[A-Za-z_]+$/ ", $value);
+  }
+
+  function is_valid_number($value) {
+    return preg_match("/^[0-9]+$/ ", $value);
   }
 
 ?>
