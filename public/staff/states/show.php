@@ -8,14 +8,16 @@ $id = $_GET['id'];
 $state_result = find_state_by_id($id);
 // No loop, only one result
 $state = db_fetch_assoc($state_result);
+$country_id = $state['country_id'];
+$country = db_fetch_assoc(find_country_by_id($country_id));
+$country_name = $country['name'];
 ?>
 
 <?php $page_title = 'Staff: State of ' . $state['name']; ?>
 <?php include(SHARED_PATH . '/header.php'); ?>
 
 <div id="main-content">
-  <a href="index.php">Back to States List</a><br />
-
+  <a href="../countries/show.php?id=<?php echo $state['country_id']; ?>">Back to Country Details</a>
   <h1>State: <?php echo $state['name']; ?></h1>
 
   <?php
@@ -27,6 +29,10 @@ $state = db_fetch_assoc($state_result);
     echo "<tr>";
     echo "<td>Code: </td>";
     echo "<td>" . $state['code'] . "</td>";
+    echo "</tr>";
+    echo "<tr>";
+    echo "<td>Country Name: </td>";
+    echo "<td>" . $country_name . "</td>";
     echo "</tr>";
     echo "<tr>";
     echo "<td>Country ID: </td>";

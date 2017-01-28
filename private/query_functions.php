@@ -12,6 +12,94 @@
     return $country_result;
   }
 
+  // Find country by ID
+  function find_country_by_id($id=0) {
+    global $db;
+    $sql = "SELECT * FROM countries ";
+    $sql .= "WHERE id='" . $id . "';";
+    $country_result = db_query($db, $sql);
+    return $country_result;
+  }
+
+  function validate_country($country, $errors=array()) {
+    //validate name
+    if (is_blank($country['name'])) {
+      $errors[] = "Name cannot be blank.";
+    } elseif (!has_length($country['name'], ['min' => 2, 'max' => 255])) {
+      $errors[] = "Name must be between 2 and 255 characters.";
+    } elseif (!has_valid_name_format($country['name'])){
+      $errors[] = "Enter a valid name without special characters.";
+    }
+    
+    // validate code
+    if (is_blank($country['code'])) {
+      $errors[] = "Code cannot be blank.";
+    } elseif (!has_length($country['code'], ['min' => 2, 'max' => 255])) {
+      $errors[] = "Code must be between 2 and 255 characters.";
+    } elseif (!has_valid_name_format($country['code'])){
+      $errors[] = "Enter a valid code without special characters.";
+    }
+    return $errors;
+  }
+
+  // Add a new country to the table
+  // Either returns true or an array of errors
+  function insert_country($country) {
+    global $db;
+
+    $errors = validate_country($country);
+    if (!empty($errors)) {
+      return $errors;
+    }
+
+    $sql = "INSERT INTO countries ";
+    $sql .= "(name, code) ";
+    $sql .= "VALUES (";
+    $sql .= "'" . $country['name'] . "',";
+    $sql .= "'" . $country['code'] . "'";
+    $sql .= ");";
+    // For INSERT statments, $result is just true/false
+    $result = db_query($db, $sql);
+    if($result) {
+      return true;
+    } else {
+      // The SQL INSERT statement failed.
+      // Just show the error, not the form
+      echo db_error($db);
+      db_close($db);
+      exit;
+    }
+  }
+
+  // Edit a country record
+  // Either returns true or an array of errors
+  function update_country($country) {
+    global $db;
+
+    $errors = validate_country($country);
+    if (!empty($errors)) {
+      return $errors;
+    }
+
+    $sql = "UPDATE countries SET ";
+    $sql .= "name='" . $country['name'] . "', ";
+    $sql .= "code='" . $country['code'] . "', ";
+    $sql .= "WHERE id='" . $country['id'] . "' ";
+    $sql .= "LIMIT 1;";
+    // For update_country statments, $result is just true/false
+    $result = db_query($db, $sql);
+    if($result) {
+      return true;
+    } else {
+      // The SQL UPDATE statement failed.
+      // Just show the error, not the form
+      echo db_error($db);
+      db_close($db);
+      exit;
+    }
+  }
+
+
   //
   // STATE QUERIES
   //
