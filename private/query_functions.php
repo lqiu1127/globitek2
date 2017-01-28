@@ -404,6 +404,8 @@
   }
 
   function validate_user($user, $errors=array()) {
+    global $db;
+    
     if (is_blank($user['first_name'])) {
       $errors[] = "First name cannot be blank.";
     } elseif (!has_length($user['first_name'], array('min' => 2, 'max' => 255))) {
@@ -426,6 +428,18 @@
       $errors[] = "Username cannot be blank.";
     } elseif (!has_length($user['username'], array('max' => 255))) {
       $errors[] = "Username must be less than 255 characters.";
+    }
+
+    // check if there is already the same entry
+    if (!is_blank($user['username'])){
+      // Write SQL quary 
+      $sql = sprintf ("SELECT * FROM users WHERE username = \"%s\"; ", $user['username']);
+      //common error is not using the quary correctly or not accessing the num_rows correctly
+      $result = $db->query($sql);
+      if($result->num_rows > 0){
+        //ther username is already in use
+        $errors[] = "The username is already in use.";
+      }
     }
     return $errors;
   }

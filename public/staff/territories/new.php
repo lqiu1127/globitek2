@@ -9,12 +9,12 @@ $territory = array(
   'state_id' => ''
 );
 
+$territory['state_id'] = $_GET['state_id'];
 if(is_post_request()) {
-
   // Confirm that values are present before accessing them.
   if(isset($_POST['name'])) { $territory['name'] = $_POST['name']; }
   if(isset($_POST['position'])) { $territory['position'] = $_POST['position']; }
-  $territory['state_id'] = 1;
+  
   $result = insert_territory($territory);
   if($result === true) {
     $new_id = db_insert_id($db);
@@ -28,13 +28,13 @@ if(is_post_request()) {
 <?php include(SHARED_PATH . '/header.php'); ?>
 
 <div id="main-content">
-  <a href="../states/show.php?id=<?php echo $territory['state_id']; ?>">Back to State Details</a>
+  <a href="../states/show.php?id=<?php echo $_GET['state_id'] ?>">Back to State Details</a>
 
   <h1>New Territory</h1>
 
   <?php echo display_errors($errors); ?>
 
-  <form action="new.php?id=<?php echo $territory['state_id']?>" method="post">
+  <form action="new.php?state_id=<?php echo $_GET['state_id']?>" method="post">
     Name:<br />
     <input type="text" name="name" value="<?php echo $territory['name']; ?>" /><br />
     Position:<br />
