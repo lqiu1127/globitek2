@@ -124,6 +124,7 @@
     }
   }
 
+
   //
   // TERRITORY QUERIES
   //
@@ -405,7 +406,7 @@
 
   function validate_user($user, $errors=array()) {
     global $db;
-    
+
     if (is_blank($user['first_name'])) {
       $errors[] = "First name cannot be blank.";
     } elseif (!has_length($user['first_name'], array('min' => 2, 'max' => 255))) {
@@ -436,10 +437,19 @@
       $sql = sprintf ("SELECT * FROM users WHERE username = \"%s\"; ", $user['username']);
       //common error is not using the quary correctly or not accessing the num_rows correctly
       $result = $db->query($sql);
-      if($result->num_rows > 0){
+      if($result->num_rows == 1){
+        //special case, check if username is changed
+        $temp_user = db_fetch_assoc($result);
+        if ($temp_user['id'] != $user['id'] ){
+          //then username is already in use
+          $errors[] = "The username is already in use.";
+        }
+      }
+      if($result->num_rows > 1){
         //ther username is already in use
         $errors[] = "The username is already in use.";
       }
+      
     }
     return $errors;
   }
@@ -495,6 +505,28 @@
     $sql .= "WHERE id='" . $user['id'] . "' ";
     $sql .= "LIMIT 1;";
     // For update_user statments, $result is just true/false
+    $result = db_query($db, $sql);
+    if($result) {
+      return true;
+    } else {
+      // The SQL UPDATE statement failed.
+      // Just show the error, not the form
+      echo db_error($db);
+      db_close($db);
+      exit;
+    }
+  }
+
+  // delete a user record
+  // return result of delete
+  function delete_user($user) {
+    global $db;
+
+    $sql = "DELETE FROM users ";
+    $sql .= "WHERE id='" . $user['id'] . "' ";
+    $sql .= "LIMIT 1;";
+
+    // For update_state statments, $result is just true/false
     $result = db_query($db, $sql);
     if($result) {
       return true;
