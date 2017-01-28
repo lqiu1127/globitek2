@@ -1,16 +1,16 @@
 # Project 2 - Input/Output Sanitization
 
-Time spent: **X** hours spent in total
+Time spent: **35** hours spent in total
 
 ## User Stories
 
 The following **required** functionality is completed:
 
-1\. [ x]  Required: Import the Starting Database
+1\. [ x ]  Required: Import the Starting Database
 
-2\. [ x]  Required: Set Up the Starting Code
+2\. [ x ]  Required: Set Up the Starting Code
 
-3\. [ x]  Required: Review code for Staff CMS for Users
+3\. [ x ]  Required: Review code for Staff CMS for Users
 
 4\. [ x]  Required: Complete Staff CMS for Salespeople
   * [ x]  Required: index.php
