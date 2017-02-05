@@ -83,9 +83,10 @@
 
     $sql = "UPDATE countries SET ";
     $sql .= "name='" . $country['name'] . "', ";
-    $sql .= "code='" . $country['code'] . "', ";
+    $sql .= "code='" . $country['code'] . "' ";
     $sql .= "WHERE id='" . $country['id'] . "' ";
     $sql .= "LIMIT 1;";
+
     // For update_country statments, $result is just true/false
     $result = db_query($db, $sql);
     if($result) {
@@ -199,6 +200,7 @@
     $sql .= "country_id='" . $state['country_id'] . "' ";
     $sql .= "WHERE id='" . $state['id'] . "' ";
     $sql .= "LIMIT 1;";
+
     // For update_state statments, $result is just true/false
     $result = db_query($db, $sql);
     if($result) {

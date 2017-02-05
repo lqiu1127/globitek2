@@ -28,7 +28,7 @@
   // has_valid_name_format('Loe-Garb's')
   function has_valid_name_format($value) {
     // regex for names in generals
-    return preg_match("/^[A-Za-z_'.-]+$/ ", $value);
+    return preg_match("/^[A-Za-z_'.- ]+$/ ", $value);
   }
 
   // has_valid_username_format('Loe-Garb's')
