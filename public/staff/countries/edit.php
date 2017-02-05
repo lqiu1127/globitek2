@@ -14,10 +14,8 @@ $errors = array();
 if(is_post_request()) {
 
   // Confirm that values are present before accessing them.
-  if(isset($_POST['name'])) { $country['name'] = $_POST['name']; }
-  if(isset($_POST['code'])) { $country['code'] = $_POST['code']; }
-  if(isset($_POST['country_id'])) { $country['country_id'] = $_POST['country_id']; }
-
+  if(isset($_POST['name'])) { $country['name'] = h($_POST['name']); }
+  if(isset($_POST['code'])) { $country['code'] = h($_POST['code']); }
 
   $result = update_country($country);
   if($result === true) {

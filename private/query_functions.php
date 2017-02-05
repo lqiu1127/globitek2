@@ -36,8 +36,8 @@
       $errors[] = "Code cannot be blank.";
     } elseif (!has_length($country['code'], ['min' => 2, 'max' => 255])) {
       $errors[] = "Code must be between 2 and 255 characters.";
-    } elseif (!has_valid_name_format($country['code'])){
-      $errors[] = "Enter a valid code without special characters.";
+    } elseif (!has_valid_code_format($country['code'])){
+      $errors[] = "Enter a valid country code without special characters.";
     }
     return $errors;
   }
@@ -148,7 +148,7 @@
       $errors[] = "Code cannot be blank.";
     } elseif (!has_length($state['code'], ['min' => 2, 'max' => 255])) {
       $errors[] = "Code must be between 2 and 255 characters.";
-    } elseif (!has_valid_name_format($state['code'])){
+    } elseif (!has_valid_code_format($state['code'])){
       $errors[] = "Enter a valid code without special characters.";
     }
     return $errors;
@@ -253,7 +253,7 @@
       $errors[] = "Name cannot be blank.";
     } elseif (!has_length($territory['name'], ['min' => 2, 'max' => 255])) {
       $errors[] = "Name must be between 2 and 255 characters.";
-    } elseif (!has_valid_name_format($territory['name'])){
+    } elseif (!has_valid_territory_name($territory['name'])){
       $errors[] = "Enter a valid name without special characters.";
     }
 
@@ -393,7 +393,10 @@
       $errors[] = "Phone cannot be blank.";
     } elseif (!has_length($salesperson['phone'], array('min' => 6,'max' => 20))) {
       $errors[] = "Phone number needs to be longer than 6 characters and less than 20.";
+    } elseif (!is_valid_phone_number($salesperson['phone'])){
+      $errors[] = "Enter a valid phone number.";
     }
+
     return $errors;
   }
 

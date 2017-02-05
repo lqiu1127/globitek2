@@ -28,7 +28,31 @@
   // has_valid_name_format('Loe-Garb's')
   function has_valid_name_format($value) {
     // regex for names in generals
-    return preg_match("/^[A-Za-z_'.- ]+$/ ", $value);
+    return preg_match("/^[A-Za-z_'.-]+$/ ", $value);
+  }
+
+  // has_valid_name_format('United State's')
+  function has_valid_country_name($value) {
+    // regex for country names in generals
+    return preg_match("/^[ A-Za-z_'.-]+$/ ", $value);
+  }
+
+  // has_valid_name_format('Loe-Garb's')
+  function has_valid_state_name($value) {
+    // regex for state names in generals
+    return preg_match("/^[ A-Za-z_'-]+$/ ", $value);
+  }
+  
+  // has_valid_name_format('Loe-Garb's')
+  function has_valid_territory_name($value) {
+    // regex for state names in generals
+    return preg_match("/^[ A-Za-z_'-]+$/ ", $value);
+  }
+
+  // has_valid_name_format('Loe-Garb's')
+  function has_valid_code_format($value) {
+    // regex for state code in generals
+    return preg_match("/^[A-Za-z]+$/ ", $value);
   }
 
   // has_valid_username_format('Loe-Garb's')
@@ -39,6 +63,9 @@
 
   function is_valid_number($value) {
     return preg_match("/^[0-9]+$/ ", $value);
+  }
+  function is_valid_phone_number($value) {
+    return preg_match("/^[0-9().-]+$/ ", $value);
   }
 
 ?>

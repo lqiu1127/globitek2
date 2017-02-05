@@ -12,8 +12,8 @@ $territory = array(
 $territory['state_id'] = $_GET['state_id'];
 if(is_post_request()) {
   // Confirm that values are present before accessing them.
-  if(isset($_POST['name'])) { $territory['name'] = $_POST['name']; }
-  if(isset($_POST['position'])) { $territory['position'] = $_POST['position']; }
+  if(isset($_POST['name'])) { $territory['name'] = h($_POST['name']); }
+  if(isset($_POST['position'])) { $territory['position'] = h($_POST['position']); }
   
   $result = insert_territory($territory);
   if($result === true) {
